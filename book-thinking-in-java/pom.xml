@@ -8,7 +8,7 @@
         <groupId>com.github.book</groupId>
         <artifactId>book-note</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../book-thinking-in-java/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>book-thinking-in-java</artifactId>
