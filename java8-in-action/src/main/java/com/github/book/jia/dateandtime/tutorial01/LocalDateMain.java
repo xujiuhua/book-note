@@ -54,6 +54,5 @@ public class LocalDateMain {
     public static void parseString() {
         LocalDate date = LocalDate.parse("2017-09-19");
         log.info("year is {}", date.get(ChronoField.YEAR));
-
     }
 }
