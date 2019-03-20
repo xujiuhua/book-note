@@ -1,7 +1,5 @@
 package com.github.book.jia.dateandtime.tutorial01;
 
-import org.omg.PortableInterceptor.LOCATION_FORWARD;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
