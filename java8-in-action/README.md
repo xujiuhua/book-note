@@ -1,8 +1,6 @@
-Java书籍个人总结
+## java8 in action
 
-### java8 in action
-
-- lambda
+### lambda
 ```
 Passing a lambda, a one-off piece of code such as 
 apple -> apple.getWeight() > 150
@@ -14,7 +12,7 @@ Apple::isHeavy
 
 Real-World(现实中的确存在的)
 
-#### Comparator
+##### Comparator
 ```java
 public interface Comparator<T> {
     int compare(T o1, T o2); 
@@ -34,7 +32,7 @@ inventory.sort(
 (Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight()));
 ```
 
-#### Runnable
+##### Runnable
 ```java
 public interface Runnable{ 
     void run();
@@ -55,7 +53,7 @@ java8
 Thread t = new Thread(() -> System.out.println("Hello world"));
 ```
 
-#### GUI event
+##### GUI event
 ```java
 Button button = new Button("Send"); 
 button.setOnAction(new EventHandler<ActionEvent>() {
@@ -70,12 +68,16 @@ java8
 button.setOnAction((ActionEvent event) -> label.setText("Sent!!"));
 ```
 
-- stream
+### todo list
+
+- [ ] date&time
+
+- [ ] stream
+
+- [ ] defaultMethod
+
+- [ ] optional
 
 
-- defaultMethod
-- optional
-- date/time
 
-### thinking in java
 
