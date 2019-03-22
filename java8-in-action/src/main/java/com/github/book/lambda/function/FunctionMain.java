@@ -41,7 +41,7 @@ public class FunctionMain {
         BinaryOperator<Integer> add = (n1, n2) -> n1 + n2;
         System.out.println(add.apply(3, 6));
 
-        // other omit
+        // Other omit
 
     }
 }
