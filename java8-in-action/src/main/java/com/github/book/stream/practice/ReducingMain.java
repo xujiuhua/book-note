@@ -55,7 +55,6 @@ public class ReducingMain {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
         Optional<Integer> max = numbers.stream().reduce(Integer::max);
         System.out.println(max.get());
-
     }
 
     /**
@@ -66,6 +65,5 @@ public class ReducingMain {
         long count = numbers.stream().count();
         System.out.println(count);
     }
-
 
 }
