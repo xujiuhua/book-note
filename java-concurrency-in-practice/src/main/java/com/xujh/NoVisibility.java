@@ -12,7 +12,7 @@ package com.xujh;
  * @since JDK 1.8
  */
 public class NoVisibility {
-    private static volatile boolean ready;
+    private static boolean ready;
     private static int number;
 
     private static class ReaderThread extends Thread {

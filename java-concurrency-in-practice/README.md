@@ -21,8 +21,55 @@
 
 - 内部锁
 
-- 可重入
+- 可重入锁：https://blog.csdn.net/yanyan19880509/article/details/52345422/
 
 - 不可以将一个原子操作分解到多个synchronized中，不过应尽量从synchronized中分离出耗时且不影响共享状态的操作
 
-- 
+### 共享对象
+
+#### 可见性
+- 最低限的安全性应用于所有变量，除了一个例外，没有声明volatile的64位数变量(long,double),高32位和低32位
+```java
+public class SynchronizedInteger {
+    @GuardedBy("this") private int value;
+
+    public synchronized int get() {
+        return value;
+    }
+
+    public synchronized void set(int value) {
+        this.value = value;
+    }
+}
+```
+- 当方位一个共享变量时，为什么要求所有线程都由同一个锁进行同步？第一保证一个线程第变量的写入，其他线程也都可见；
+第二如果一个线程没有使用恰当的锁读取了变量，这个变量可能是一个过期的数据
+
+- volatile,一种同步的弱形式，当一个域申明为volatile类型后，编译器与运行时会监视这个变量（它是共享的）；
+而且对他的操作不会与其他内存操作一起被重排序。
+
+- 正确使用volatile的方式包括：用于确保它们所引用对象状态的可见性，或者用于标识重要的生命周期事件（比如初始化或关闭）的发生
+
+> 加锁可以保证可见性和原子性；volatile只能保存可见性
+
+- 使用volatile变量需要满足所有标准：1.写入变量不依赖变量的当前值 2.变量不需要其他的状态变量共同参与不变约束 3.访问变量没有其他的原因需要加锁
+
+#### 发布和溢出
+
+- 最常见的发布对象的方式是将对象的引用存储到公共静态域中，任何类和线程都看见此域
+```java
+public class UnsafeStates {
+    private String[] states = new String[]{
+            "AK", "AL"
+    };
+
+    public String[] getStates() {
+        return states;
+    }
+
+    public static void main(String[] args) {
+        UnsafeStates unsafeStates = new UnsafeStates();
+        unsafeStates.states = new String[]{"hello", "world"};
+    }
+}
+```
