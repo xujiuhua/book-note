@@ -37,3 +37,23 @@
 1. 使用总线锁保证原子性
 2. 使用缓存锁保证原子性
 
+## Java内存模型
+
+### happens-before
+两个操作之间具有happens-before关系，并不意味前一个操作必须要在后一个操作之前执行！
+happens-before仅仅要求前一个操作对（执行的结果）后一个操作可见
+
+1. 程序顺序规则
+2. 监视器锁规则：对一个锁的解锁, happens-before于随后这个锁的加锁
+3. volatile规则: 对一个volatile域的写，happens-before 任意后续对这个volatile域的读
+4. 传递性：A happens-before B ,B happens-before C --> A happens-before C
+
+### 重排序-三种数据依赖性
+- 写后读: a = 1; b = a;
+- 写后写: a = 1; a = 2;
+- 读后写: a = b; b = 1;
+
+只要重排序两个操作的执行顺序，程序的执行结果就会被改变
+
+在单线程中，对存在控制依赖的操作重排序，不会改变执行结果（as-if-serial语义允许）；
+在多线程中，对存在控制依赖的操作重排序，可能会改变程序的执行结果。
