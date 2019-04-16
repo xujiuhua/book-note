@@ -13,6 +13,7 @@
         <module>book-thinking-in-java</module>
         <module>java8-in-action</module>
         <module>java-concurrency-in-practice</module>
+        <module>art-of-java-concurrency</module>
     </modules>
 
     <properties>
