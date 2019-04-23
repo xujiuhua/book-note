@@ -27,6 +27,7 @@ public class SyncStaticClassDemo {
     public synchronized static void method1() {
         System.out.println("method1 start...");
         try {
+            System.out.println("method1 execute");
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -37,6 +38,7 @@ public class SyncStaticClassDemo {
     public synchronized static void method2() {
         System.out.println("method2 start...");
         try {
+            System.out.println("method2 execute");
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
