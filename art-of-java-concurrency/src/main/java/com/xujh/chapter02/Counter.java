@@ -23,7 +23,11 @@ public class Counter {
 
     private AtomicInteger atomicI = new AtomicInteger(0);
 
-    public static void main(String[] args) {
+    private AtomicInteger b = new AtomicInteger(0);
+
+    public static void main(String[] args) throws Exception {
+
+        final CasCounter c =  new CasCounter();
 
         final Counter counter = new Counter();
         List<Thread> ts = new ArrayList<>();
@@ -33,6 +37,8 @@ public class Counter {
                 for (int j = 0; j < 10000; j++) {
                     counter.count();
                     counter.safeCount();
+                    counter.b.incrementAndGet();
+                    c.increment();
                 }
             });
             ts.add(t);
@@ -53,6 +59,8 @@ public class Counter {
 
         System.out.println(counter.i);
         System.out.println(counter.atomicI.get());
+        System.out.println(counter.b.get());
+        System.out.println(c.getCounter());
         System.out.println(System.currentTimeMillis() - start);
 
     }
