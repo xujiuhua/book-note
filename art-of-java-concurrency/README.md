@@ -57,3 +57,21 @@ happens-before仅仅要求前一个操作对（执行的结果）后一个操作
 
 在单线程中，对存在控制依赖的操作重排序，不会改变执行结果（as-if-serial语义允许）；
 在多线程中，对存在控制依赖的操作重排序，可能会改变程序的执行结果。
+
+### 双重检验锁定和延迟初始化
+见`DoubleCheckedLocking`
+问题根源在第7行`instance = new Instance();`，可以分解为如下：
+```
+memory = allocate();
+ctorInstance(memory);
+instance = memory;
+```
+然后重排序为,单线程不会改变程序的执行结果，以下重排序允许，例如第4步调用instance,无论如何2肯定是在4前面，合理；
+但是线程会导致从步骤3多读取到一个不完整的对象。
+```
+memory = allocate(); // 1分配内存空间
+instance = memory; // 3指向内存地址
+ctorInstance(memory); // 2初始化对象
+```
+
+解决办法：1、使用volatile 2、基于类的初始化
