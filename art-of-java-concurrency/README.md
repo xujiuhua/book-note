@@ -85,3 +85,8 @@ ctorInstance(memory); // 2初始化对象
 - WAITING: 等待状态，需要其他线程做出动作（通知或中断）e.g.  Waiting.class.wait()
 - TIME_WAITING: 超时等待，可以在指定时间自行返回，e.g. Thread.sleep(100)
 - TERMINATED: 终止状态，线程已执行完毕
+
+### 安全地终止线程
+> Shutdown.java
+
+通过标识位或者中断操作的方式，能够使线程在终止时有机会去清理资源，而不是武断的将线程停止
