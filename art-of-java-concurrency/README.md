@@ -75,3 +75,13 @@ ctorInstance(memory); // 2初始化对象
 ```
 
 解决办法：1、使用volatile 2、基于类的初始化
+
+## Java并发编程基础
+### Java线程状态
+> ThreadState.java, 使用java自带工具查看， jps, jstack pid
+- NEW: 初始状态，但是还乜有调用start()方法
+- RUNNABLE: 运行状态
+- BLOCKED: 阻塞状态,表示线程阻塞于锁
+- WAITING: 等待状态，需要其他线程做出动作（通知或中断）e.g.  Waiting.class.wait()
+- TIME_WAITING: 超时等待，可以在指定时间自行返回，e.g. Thread.sleep(100)
+- TERMINATED: 终止状态，线程已执行完毕
