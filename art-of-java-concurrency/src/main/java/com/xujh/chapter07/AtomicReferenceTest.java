@@ -45,7 +45,5 @@ public class AtomicReferenceTest {
             this.name = name;
             this.age = age;
         }
-
-
     }
 }
