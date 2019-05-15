@@ -5,7 +5,12 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p></p>
+ * <p>
+ *
+ *     所以线程都达到await后,才会执行await后的语句，otherwise, wait forever.
+ *
+ *     e.g. Change the variable of c to 3, less one thread, wait forever.
+ * </p>
  *
  * @author jiuhua.xu
  * @version 1.0

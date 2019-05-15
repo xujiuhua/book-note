@@ -105,3 +105,4 @@ ctorInstance(memory); // 2初始化对象
 
 ## Java中的并发工具类
 - CountDownLatch 允许一个或者多个线程等待其他线程完成工作
+- CyclicBarrier 是一个同步辅助类，允许一组线程互相等待，直到到达某个公共屏障点 (common barrier point)。因为该 barrier 在释放等待线程后可以重用，所以称它为循环 的 barrier
