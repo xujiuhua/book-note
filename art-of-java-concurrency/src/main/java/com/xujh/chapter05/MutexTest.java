@@ -38,11 +38,6 @@ public class MutexTest {
         try {
             System.out.println(Thread.currentThread().getName() + " obtain lock success.");
         } finally {
-//            try {
-//                TimeUnit.SECONDS.sleep(1);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             mutex.unlock();
             System.out.println(Thread.currentThread().getName() + " release lock success.");
         }
