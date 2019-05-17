@@ -101,7 +101,74 @@ ctorInstance(memory); // 2初始化对象
 
 ## Java中的锁
 
-独占锁：在同一时刻只能有一个线程获取到锁，而其他获取锁的线程只能处于同步队列中等待，只有获取锁的线程释放锁，后继的线程才能获取锁
+- 独占锁：锁在一个时间点只能被一个线程锁占有。根据锁的获取机制，它又划分为“公平锁”和“非公平锁”。公平锁，是按照通过CLH等待线程按照先来先得的规则，公平的获取锁；而非公平锁，则当线程要获取锁时，它会无视CLH等待队列而直接获取锁。独占锁的典型实例子是ReentrantLock，此外，ReentrantReadWriteLock.WriteLock也是独占锁。
+- 共享锁：能被多个线程同时拥有，能被共享的锁。JUC包中的ReentrantReadWriteLock.ReadLock，CyclicBarrier， CountDownLatch和Semaphore都是共享锁。这些锁的用途和原理，在以后的章节再详细介绍。
+- 重入锁：该锁能够支持一个线程对资源的重复加锁(1、线程再次获取锁，线程需要去识别获取锁的线程是否是的当前线程；2、锁的最终释放，线程重复n次获取锁，随后n次释放锁，其他线程才能获取锁，计数器)
+
+源码 ReentrantLock
+```java
+final boolean nonfairTryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+        if (compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+    }
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc < 0) // overflow
+            throw new Error("Maximum lock count exceeded");
+        setState(nextc);
+        return true;
+    }
+    return false;
+}
+```
+
+example1:
+```java
+class MyClass {
+    public synchronized void method1() {
+        method2();
+    }
+ 
+    public synchronized void method2() {
+ 
+    }
+}
+```
+example2:
+```java
+public class ReentrantLockTest {
+
+    private static Lock lock = new ReentrantLock();
+
+    public static void main(String[] args) {
+        m1();
+    }
+
+    private static void m1() {
+        lock.lock();
+        System.out.println("m1");
+        m2();
+        lock.unlock();
+    }
+
+    private static void m2() {
+        lock.lock();
+        System.out.println("m2");
+        lock.unlock();
+    }
+
+}
+```
+上述代码中的两个方法method1和method2都用synchronized修饰了，假如某一时刻，线程A执行到了method1，此时线程A获取了这个对象的锁，而由于method2也是synchronized方法，假如synchronized不具备可重入性，此时线程A需要重新申请锁。但是这就会造成一个问题，因为线程A已经持有了该对象的锁，而又在申请获取该对象的锁，这样就会线程A一直等待永远不会获取到的锁。
+
+而由于synchronized和Lock都具备可重入性，所以不会发生上述现象。
+
+
 
 ## Java中的并发工具类
 - CountDownLatch 允许一个或者多个线程等待其他线程完成工作
