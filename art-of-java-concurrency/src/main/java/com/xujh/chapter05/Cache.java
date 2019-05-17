@@ -3,7 +3,7 @@ package com.xujh.chapter05;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -22,7 +22,7 @@ public class Cache {
 
     public static final Object get(String key) {
         r.lock();
-        System.out.println(LocalDateTime.now() + ":" + Thread.currentThread().getName());
+        System.out.println(LocalDateTime.now() + " ==> " + Thread.currentThread().getName() + " : R");
         try {
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -37,7 +37,7 @@ public class Cache {
 
     public static final Object put(String key, Object value) {
         w.lock();
-        System.out.println(LocalDateTime.now() + ":" + Thread.currentThread().getName());
+        System.out.println(LocalDateTime.now() + " ==> " + Thread.currentThread().getName() + " : W");
         try {
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -61,14 +61,21 @@ public class Cache {
 
     public static void main(String[] args) {
 
-        new Thread(() -> Cache.put("a", "hello"), "w-a").start();
-        new Thread(() -> Cache.put("b", "world"), "w-b").start();
 
-        // 读锁时其他线程锁定；写锁不影响其他线程
-        new Thread(() -> System.out.println(Cache.get("a")), "r-a").start();
-        new Thread(() -> System.out.println(Cache.get("b")), "r-b").start();
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
 
-        new Thread(() -> Cache.put("c", "!"), "w-c").start();
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 100, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1024), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+
+        executor.execute(() -> Cache.put("a", "hello"));
+        executor.execute(() -> Cache.put("b", "world"));
+
+        executor.execute(() -> System.out.println(Cache.get("a")));
+        executor.execute(() -> System.out.println(Cache.get("b")));
+
+        executor.execute(() -> Cache.put("c", "!"));
+
+        executor.shutdown();
+
 
     }
 }
