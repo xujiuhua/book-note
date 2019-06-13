@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * <p>
- *     插入排序：左侧的数据陆续归位，列入扑克
+ * 插入排序：左侧的数据陆续归位，列入扑克
  * </p>
  *
  * @author jiuhua.xu
@@ -24,12 +24,13 @@ public class InsertionSort {
 
         for (int i = 1; i < len; i++) {
             int target = data[i];
-            int j;
-            for (j = i; j>0 && data[j-1]>target; j--) {
+            int j = i;
+            while (j > 0 && data[j - 1] > target) {
                 // 把位置预留出来
-                data[j] = data[j-1];
+                data[j] = data[j - 1];
+                j--;
             }
-            //将需要插入的数放入这个位置
+            // 将需要插入的数放入这个位置
             data[j] = target;
 
         }
