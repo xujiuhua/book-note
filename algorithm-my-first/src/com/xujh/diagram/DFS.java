@@ -1,25 +1,21 @@
 package com.xujh.diagram;
 
+import com.sun.org.apache.xerces.internal.xs.StringList;
+import com.xujh.heap.Node;
+
 import java.util.*;
 
 /**
- * <p>
- * 广度优先搜索：从离起点近的位置开始搜索
- * http://cmsblogs.com/?p=4657
- * https://blog.csdn.net/a8082649/article/details/81395359
- * </p>
+ * <p></p>
  *
  * @author jiuhua.xu
  * @version 1.0
  * @since JDK 1.8
  */
-public class WidePrivilegeSearch {
-
-    private static Map<String, String[]> map = new HashMap<>();
-
-
+public class DFS {
     public static void main(String[] args) {
 
+        Map<String, String[]> map = new HashMap<>();
         map.put("A", new String[]{"B", "C"});
         map.put("B", new String[]{"E"});
         map.put("C", new String[]{"D", "F"});
@@ -28,34 +24,61 @@ public class WidePrivilegeSearch {
         map.put("F", new String[]{"E", "G"});
         map.put("H", new String[]{});
 
-        // 获取从A到H的最短路径
-        Node target = findTarget("A", "H", map);
+        // 获取从A到H的路径
+        Node target = findTarget("A", "G", map);
+        // 打印路径
         printPath(target);
-
     }
 
     private static Node findTarget(String start, String target, Map<String, String[]> map) {
         List<String> hasSearchList = new ArrayList<>();
-        LinkedList<Node> queue = new LinkedList<>();
-        queue.offer(new Node(start, null));
-        while (!queue.isEmpty()) {
-            Node node = queue.poll();
-            String nodeId = node.id;
+        Stack<Node> stack = new Stack<>();
+        stack.push(new Node(start, null));
+        while (!stack.isEmpty()) {
+            Node node = stack.peek();
+            final String nodeId = node.id;
             if (hasSearchList.contains(nodeId)) {
+
+                String[] children = map.get(nodeId);
+                if (Objects.isNull(children)) {
+                    stack.pop();
+                    continue;
+                }
+
+                if (hasSearchList.containsAll(Arrays.asList(children))) {
+                    stack.pop();
+                    continue;
+                }
+
+                for (String child : children) {
+                    if (!hasSearchList.contains(child)) {
+                        stack.push(new Node(child, node));
+                        break;
+                    }
+                }
                 continue;
             }
+
             System.out.println("判断节点:" + nodeId);
             if (target.equals(nodeId)) {
                 return node;
             }
+
             hasSearchList.add(nodeId);
             String[] children = map.get(nodeId);
-            Arrays.stream(children)
-                    .forEach(a -> queue.offer(new Node(a, node)));
+            if (Objects.nonNull(children) && children.length > 0) {
+                for (String child : children) {
+                    if (!hasSearchList.contains(child)) {
+                        stack.push(new Node(child, node));
+                        break;
+                    }
+                }
+            } else {
+                stack.pop();
+            }
         }
         return null;
     }
-
 
     private static void printPath(Node target) {
         if (null != target) {
@@ -74,7 +97,7 @@ public class WidePrivilegeSearch {
                     path += "-->";
                 }
             }
-            System.out.print("步数最短：" + path);
+            System.out.print("步数：" + path);
         } else {
             System.out.println("未找到了目标节点");
         }
@@ -89,7 +112,4 @@ public class WidePrivilegeSearch {
             this.parent = parent;
         }
     }
-
 }
-
-
