@@ -40,22 +40,16 @@ public class DFS {
             if (hasSearchList.contains(nodeId)) {
 
                 String[] children = map.get(nodeId);
-                if (Objects.isNull(children)) {
+                if (Objects.isNull(children) || hasSearchList.containsAll(Arrays.asList(children))) {
                     stack.pop();
                     continue;
                 }
 
-                if (hasSearchList.containsAll(Arrays.asList(children))) {
-                    stack.pop();
-                    continue;
-                }
-
-                for (String child : children) {
-                    if (!hasSearchList.contains(child)) {
-                        stack.push(new Node(child, node));
-                        break;
-                    }
-                }
+                String child = Arrays.stream(children)
+                        .filter(a -> !hasSearchList.contains(a))
+                        .findFirst()
+                        .get();
+                stack.push(new Node(child, node));
                 continue;
             }
 
