@@ -1,7 +1,5 @@
 package com.xujh.search;
 
-import java.util.Arrays;
-
 /**
  * <p></p>
  *
