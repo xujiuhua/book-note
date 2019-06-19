@@ -6,6 +6,7 @@ import java.util.*;
  * <p>
  * 广度优先搜索：从离起点近的位置开始搜索
  * http://cmsblogs.com/?p=4657
+ * https://blog.csdn.net/a8082649/article/details/81395359
  * </p>
  *
  * @author jiuhua.xu
@@ -14,21 +15,10 @@ import java.util.*;
  */
 public class WidePrivilegeSearch {
 
-    private static Map<String, Boolean> visit = new HashMap<>();
     private static Map<String, String[]> map = new HashMap<>();
 
 
     public static void main(String[] args) {
-
-        final Queue<String> queue = new LinkedList<>();
-
-        visit.put("0", false);
-        visit.put("1", false);
-        visit.put("2", false);
-        visit.put("3", false);
-        visit.put("4", false);
-        visit.put("5", false);
-        visit.put("6", false);
 
         map.put("A", new String[]{"B", "C"});
         map.put("B", new String[]{"E"});
@@ -78,13 +68,13 @@ public class WidePrivilegeSearch {
                 node = node.parent;
             }
             String path = "";
-            for(int i=searchPath.size()-1;i>=0;i--) {
+            for (int i = searchPath.size() - 1; i >= 0; i--) {
                 path += searchPath.get(i).id;
-                if(i!=0) {
+                if (i != 0) {
                     path += "-->";
                 }
             }
-            System.out.print("步数最短："+path);
+            System.out.print("步数最短：" + path);
         } else {
             System.out.println("未找到了目标节点");
         }
