@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * <p>
  * 贝尔曼 - 福特算法: 在图中请最短路径问题算法
+ * https://www.jianshu.com/p/7d98d1fc4964
  * </p>
  *
  * @author jiuhua.xu
