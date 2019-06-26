@@ -1,8 +1,5 @@
 package com.xujh.diagram;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
-import com.xujh.heap.Node;
-
 import java.util.*;
 
 /**
