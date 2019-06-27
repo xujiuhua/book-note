@@ -18,12 +18,18 @@ public class ValidSymbol {
     public boolean isValid(String s) {
 
         Stack<Character> stack = new Stack<>();
+        if (s == null || "".equals(s)) {
+            return false;
+        }
 
         char[] chars = s.toCharArray();
         for (char c : chars) {
             if (c == '(' || c == '[' || c == '{') {
                 stack.push(c);
             } else {
+                if (stack.empty()) {
+                    return false;
+                }
                 Character pop = stack.pop();
                 if (c == ')' && pop != '(') {
                     return false;
@@ -36,7 +42,7 @@ public class ValidSymbol {
                 }
             }
         }
-        return true;
+        return stack.empty();
     }
 
     public static void main(String[] args) {
