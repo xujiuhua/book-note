@@ -1,3 +1,5 @@
+表情插件：https://gitmoji.dev/
+
 Java书籍个人总结
 
 - java8 in action
