@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * <p>
- *     选择排序：从待排序的数据中寻找最小值，将其与序列最左边的数交换
+ *     选择排序：从待排序的数据中寻找最小值，将其与序列最左边的数交换.
  * </p>
  *
  * @author jiuhua.xu
@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public class SelectionSort {
 
-    private final static int[] DATA = new int[]{5, 9, 3, 1, 2, 8, 4, 7, 6};
+    private static final int[] DATA = new int[]{5, 9, 3, 1, 2, 8, 4, 7, 6};
 
     private static int[] sort(int[] data) {
         for (int i = 0, len = data.length; i < len; i++) {
